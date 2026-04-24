@@ -112,20 +112,57 @@ export function AppSidebar() {
               <Collapsible open={reportsOpen} onOpenChange={setReportsOpen} asChild>
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton isActive={reportsActive} tooltip="Reportes">
+                    <SidebarMenuButton
+                      isActive={reportsActive}
+                      tooltip="Reportes"
+                      className="group/collapsible-btn"
+                    >
                       <BarChart3 />
                       <span>Reportes</span>
-                      <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 data-[state=open]:rotate-180" />
+                      <ChevronDown className="ml-auto transition-transform duration-300 ease-out group-data-[state=open]/collapsible-btn:rotate-180" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-                  <CollapsibleContent>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
                     <SidebarMenuSub>
                       {reportItems.map((sub) => {
                         const active = pathname === sub.url;
                         return (
                           <SidebarMenuSubItem key={sub.title}>
                             <SidebarMenuSubButton asChild isActive={active}>
-                              <Link to={sub.url}>
+                              <Link to={sub.url} className="animate-fade-in">
+                                <sub.icon />
+                                <span>{sub.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+
+              <Collapsible open={incomeOpen} onOpenChange={setIncomeOpen} asChild>
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton
+                      isActive={incomeActive}
+                      tooltip="Ingresos"
+                      className="group/collapsible-income"
+                    >
+                      <Wallet />
+                      <span>Ingresos</span>
+                      <ChevronDown className="ml-auto transition-transform duration-300 ease-out group-data-[state=open]/collapsible-income:rotate-180" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                    <SidebarMenuSub>
+                      {incomeItems.map((sub) => {
+                        const active = pathname === sub.url;
+                        return (
+                          <SidebarMenuSubItem key={sub.title}>
+                            <SidebarMenuSubButton asChild isActive={active}>
+                              <Link to={sub.url} className="animate-fade-in">
                                 <sub.icon />
                                 <span>{sub.title}</span>
                               </Link>
