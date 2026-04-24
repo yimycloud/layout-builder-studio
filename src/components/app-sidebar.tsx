@@ -1,5 +1,22 @@
+import { useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, Inbox, Calendar, Settings, Users, BarChart3 } from "lucide-react";
+import {
+  Home,
+  Inbox,
+  Calendar,
+  Settings,
+  Users,
+  BarChart3,
+  ChevronDown,
+  ChevronsUpDown,
+  User as UserIcon,
+  LogOut,
+  CreditCard,
+  FileText,
+  TrendingUp,
+  PieChart,
+  DollarSign,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -10,20 +27,44 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const items = [
   { title: "Inicio", url: "/", icon: Home },
   { title: "Bandeja", url: "/inbox", icon: Inbox },
   { title: "Calendario", url: "/calendar", icon: Calendar },
   { title: "Equipo", url: "/team", icon: Users },
-  { title: "Reportes", url: "/reports", icon: BarChart3 },
-  { title: "Ajustes", url: "/settings", icon: Settings },
+];
+
+const reportItems = [
+  { title: "Ventas", url: "/reports/sales", icon: DollarSign },
+  { title: "Tendencias", url: "/reports/trends", icon: TrendingUp },
+  { title: "Distribución", url: "/reports/distribution", icon: PieChart },
+  { title: "Documentos", url: "/reports/documents", icon: FileText },
 ];
 
 export function AppSidebar() {
   const { pathname } = useLocation();
+  const reportsActive = pathname.startsWith("/reports");
+  const [reportsOpen, setReportsOpen] = useState(reportsActive);
 
   return (
     <Sidebar collapsible="icon">
@@ -55,14 +96,106 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 );
               })}
+
+              <Collapsible open={reportsOpen} onOpenChange={setReportsOpen} asChild>
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton isActive={reportsActive} tooltip="Reportes">
+                      <BarChart3 />
+                      <span>Reportes</span>
+                      <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180 data-[state=open]:rotate-180" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {reportItems.map((sub) => {
+                        const active = pathname === sub.url;
+                        return (
+                          <SidebarMenuSubItem key={sub.title}>
+                            <SidebarMenuSubButton asChild isActive={active}>
+                              <Link to={sub.url}>
+                                <sub.icon />
+                                <span>{sub.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        );
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === "/settings"}
+                  tooltip="Ajustes"
+                >
+                  <Link to="/settings">
+                    <Settings />
+                    <span>Ajustes</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t">
-        <div className="flex items-center gap-2 px-2 py-1.5 text-sm text-muted-foreground group-data-[collapsible=icon]:hidden">
-          v1.0.0
-        </div>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent"
+                  tooltip="Cuenta"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarFallback className="rounded-lg bg-primary text-primary-foreground">
+                      AM
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">Ana Martínez</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      ana@miapp.com
+                    </span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="right"
+                align="end"
+                className="w-56"
+              >
+                <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  Perfil
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  Facturación
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/settings">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Ajustes
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-destructive focus:text-destructive">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Cerrar sesión
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
   );
