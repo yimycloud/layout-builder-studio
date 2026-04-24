@@ -18,6 +18,9 @@ import { Route as ReportsTrendsRouteImport } from './routes/reports.trends'
 import { Route as ReportsSalesRouteImport } from './routes/reports.sales'
 import { Route as ReportsDocumentsRouteImport } from './routes/reports.documents'
 import { Route as ReportsDistributionRouteImport } from './routes/reports.distribution'
+import { Route as IncomePaymentsRouteImport } from './routes/income.payments'
+import { Route as IncomeInvoicesRouteImport } from './routes/income.invoices'
+import { Route as IncomeCreditNotesRouteImport } from './routes/income.credit-notes'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -64,6 +67,21 @@ const ReportsDistributionRoute = ReportsDistributionRouteImport.update({
   path: '/reports/distribution',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IncomePaymentsRoute = IncomePaymentsRouteImport.update({
+  id: '/income/payments',
+  path: '/income/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IncomeInvoicesRoute = IncomeInvoicesRouteImport.update({
+  id: '/income/invoices',
+  path: '/income/invoices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IncomeCreditNotesRoute = IncomeCreditNotesRouteImport.update({
+  id: '/income/credit-notes',
+  path: '/income/credit-notes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -71,6 +89,9 @@ export interface FileRoutesByFullPath {
   '/inbox': typeof InboxRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/income/credit-notes': typeof IncomeCreditNotesRoute
+  '/income/invoices': typeof IncomeInvoicesRoute
+  '/income/payments': typeof IncomePaymentsRoute
   '/reports/distribution': typeof ReportsDistributionRoute
   '/reports/documents': typeof ReportsDocumentsRoute
   '/reports/sales': typeof ReportsSalesRoute
@@ -82,6 +103,9 @@ export interface FileRoutesByTo {
   '/inbox': typeof InboxRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/income/credit-notes': typeof IncomeCreditNotesRoute
+  '/income/invoices': typeof IncomeInvoicesRoute
+  '/income/payments': typeof IncomePaymentsRoute
   '/reports/distribution': typeof ReportsDistributionRoute
   '/reports/documents': typeof ReportsDocumentsRoute
   '/reports/sales': typeof ReportsSalesRoute
@@ -94,6 +118,9 @@ export interface FileRoutesById {
   '/inbox': typeof InboxRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/income/credit-notes': typeof IncomeCreditNotesRoute
+  '/income/invoices': typeof IncomeInvoicesRoute
+  '/income/payments': typeof IncomePaymentsRoute
   '/reports/distribution': typeof ReportsDistributionRoute
   '/reports/documents': typeof ReportsDocumentsRoute
   '/reports/sales': typeof ReportsSalesRoute
@@ -107,6 +134,9 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/settings'
     | '/team'
+    | '/income/credit-notes'
+    | '/income/invoices'
+    | '/income/payments'
     | '/reports/distribution'
     | '/reports/documents'
     | '/reports/sales'
@@ -118,6 +148,9 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/settings'
     | '/team'
+    | '/income/credit-notes'
+    | '/income/invoices'
+    | '/income/payments'
     | '/reports/distribution'
     | '/reports/documents'
     | '/reports/sales'
@@ -129,6 +162,9 @@ export interface FileRouteTypes {
     | '/inbox'
     | '/settings'
     | '/team'
+    | '/income/credit-notes'
+    | '/income/invoices'
+    | '/income/payments'
     | '/reports/distribution'
     | '/reports/documents'
     | '/reports/sales'
@@ -141,6 +177,9 @@ export interface RootRouteChildren {
   InboxRoute: typeof InboxRoute
   SettingsRoute: typeof SettingsRoute
   TeamRoute: typeof TeamRoute
+  IncomeCreditNotesRoute: typeof IncomeCreditNotesRoute
+  IncomeInvoicesRoute: typeof IncomeInvoicesRoute
+  IncomePaymentsRoute: typeof IncomePaymentsRoute
   ReportsDistributionRoute: typeof ReportsDistributionRoute
   ReportsDocumentsRoute: typeof ReportsDocumentsRoute
   ReportsSalesRoute: typeof ReportsSalesRoute
@@ -212,6 +251,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsDistributionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/income/payments': {
+      id: '/income/payments'
+      path: '/income/payments'
+      fullPath: '/income/payments'
+      preLoaderRoute: typeof IncomePaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/income/invoices': {
+      id: '/income/invoices'
+      path: '/income/invoices'
+      fullPath: '/income/invoices'
+      preLoaderRoute: typeof IncomeInvoicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/income/credit-notes': {
+      id: '/income/credit-notes'
+      path: '/income/credit-notes'
+      fullPath: '/income/credit-notes'
+      preLoaderRoute: typeof IncomeCreditNotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -221,6 +281,9 @@ const rootRouteChildren: RootRouteChildren = {
   InboxRoute: InboxRoute,
   SettingsRoute: SettingsRoute,
   TeamRoute: TeamRoute,
+  IncomeCreditNotesRoute: IncomeCreditNotesRoute,
+  IncomeInvoicesRoute: IncomeInvoicesRoute,
+  IncomePaymentsRoute: IncomePaymentsRoute,
   ReportsDistributionRoute: ReportsDistributionRoute,
   ReportsDocumentsRoute: ReportsDocumentsRoute,
   ReportsSalesRoute: ReportsSalesRoute,
