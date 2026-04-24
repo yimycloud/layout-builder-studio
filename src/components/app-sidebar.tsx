@@ -16,6 +16,10 @@ import {
   TrendingUp,
   PieChart,
   DollarSign,
+  Wallet,
+  Receipt,
+  FileMinus,
+  HandCoins,
 } from "lucide-react";
 import {
   Sidebar,
@@ -61,10 +65,18 @@ const reportItems = [
   { title: "Documentos", url: "/reports/documents", icon: FileText },
 ];
 
+const incomeItems = [
+  { title: "Facturas", url: "/income/invoices", icon: Receipt },
+  { title: "Notas de crédito", url: "/income/credit-notes", icon: FileMinus },
+  { title: "Pagos", url: "/income/payments", icon: HandCoins },
+];
+
 export function AppSidebar() {
   const { pathname } = useLocation();
   const reportsActive = pathname.startsWith("/reports");
+  const incomeActive = pathname.startsWith("/income");
   const [reportsOpen, setReportsOpen] = useState(reportsActive);
+  const [incomeOpen, setIncomeOpen] = useState(incomeActive);
 
   return (
     <Sidebar collapsible="icon">
