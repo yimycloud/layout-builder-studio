@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReportsTrendsRouteImport } from './routes/reports.trends'
+import { Route as ReportsSalesRouteImport } from './routes/reports.sales'
+import { Route as ReportsDocumentsRouteImport } from './routes/reports.documents'
+import { Route as ReportsDistributionRouteImport } from './routes/reports.distribution'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -24,11 +27,6 @@ const TeamRoute = TeamRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InboxRoute = InboxRouteImport.update({
@@ -46,54 +44,107 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsTrendsRoute = ReportsTrendsRouteImport.update({
+  id: '/reports/trends',
+  path: '/reports/trends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsSalesRoute = ReportsSalesRouteImport.update({
+  id: '/reports/sales',
+  path: '/reports/sales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsDocumentsRoute = ReportsDocumentsRouteImport.update({
+  id: '/reports/documents',
+  path: '/reports/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsDistributionRoute = ReportsDistributionRouteImport.update({
+  id: '/reports/distribution',
+  path: '/reports/distribution',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/inbox': typeof InboxRoute
-  '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/reports/distribution': typeof ReportsDistributionRoute
+  '/reports/documents': typeof ReportsDocumentsRoute
+  '/reports/sales': typeof ReportsSalesRoute
+  '/reports/trends': typeof ReportsTrendsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/inbox': typeof InboxRoute
-  '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/reports/distribution': typeof ReportsDistributionRoute
+  '/reports/documents': typeof ReportsDocumentsRoute
+  '/reports/sales': typeof ReportsSalesRoute
+  '/reports/trends': typeof ReportsTrendsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendar': typeof CalendarRoute
   '/inbox': typeof InboxRoute
-  '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/reports/distribution': typeof ReportsDistributionRoute
+  '/reports/documents': typeof ReportsDocumentsRoute
+  '/reports/sales': typeof ReportsSalesRoute
+  '/reports/trends': typeof ReportsTrendsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendar' | '/inbox' | '/reports' | '/settings' | '/team'
+  fullPaths:
+    | '/'
+    | '/calendar'
+    | '/inbox'
+    | '/settings'
+    | '/team'
+    | '/reports/distribution'
+    | '/reports/documents'
+    | '/reports/sales'
+    | '/reports/trends'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/inbox' | '/reports' | '/settings' | '/team'
+  to:
+    | '/'
+    | '/calendar'
+    | '/inbox'
+    | '/settings'
+    | '/team'
+    | '/reports/distribution'
+    | '/reports/documents'
+    | '/reports/sales'
+    | '/reports/trends'
   id:
     | '__root__'
     | '/'
     | '/calendar'
     | '/inbox'
-    | '/reports'
     | '/settings'
     | '/team'
+    | '/reports/distribution'
+    | '/reports/documents'
+    | '/reports/sales'
+    | '/reports/trends'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendarRoute: typeof CalendarRoute
   InboxRoute: typeof InboxRoute
-  ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRoute
   TeamRoute: typeof TeamRoute
+  ReportsDistributionRoute: typeof ReportsDistributionRoute
+  ReportsDocumentsRoute: typeof ReportsDocumentsRoute
+  ReportsSalesRoute: typeof ReportsSalesRoute
+  ReportsTrendsRoute: typeof ReportsTrendsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -110,13 +161,6 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inbox': {
@@ -140,6 +184,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/trends': {
+      id: '/reports/trends'
+      path: '/reports/trends'
+      fullPath: '/reports/trends'
+      preLoaderRoute: typeof ReportsTrendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/sales': {
+      id: '/reports/sales'
+      path: '/reports/sales'
+      fullPath: '/reports/sales'
+      preLoaderRoute: typeof ReportsSalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/documents': {
+      id: '/reports/documents'
+      path: '/reports/documents'
+      fullPath: '/reports/documents'
+      preLoaderRoute: typeof ReportsDocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/distribution': {
+      id: '/reports/distribution'
+      path: '/reports/distribution'
+      fullPath: '/reports/distribution'
+      preLoaderRoute: typeof ReportsDistributionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -147,9 +219,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendarRoute: CalendarRoute,
   InboxRoute: InboxRoute,
-  ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRoute,
   TeamRoute: TeamRoute,
+  ReportsDistributionRoute: ReportsDistributionRoute,
+  ReportsDocumentsRoute: ReportsDocumentsRoute,
+  ReportsSalesRoute: ReportsSalesRoute,
+  ReportsTrendsRoute: ReportsTrendsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
