@@ -39,14 +39,16 @@ const paymentSchema = z.object({
     .trim()
     .regex(/^[+\d\s()-]{7,20}$/, "Teléfono inválido"),
   documentType: z.enum(["dni", "ruc", "passport"], {
-    message: "Selecciona un tipo",
+    required_error: "Selecciona un tipo",
   }),
   documentNumber: z.string().trim().min(5, "Mínimo 5").max(20),
   paymentMethod: z.enum(["cash", "card", "transfer", "wallet"]),
   currency: z.enum(["USD", "EUR", "PEN", "MXN"]),
   dueDate: z.string().min(1, "Fecha requerida"),
   notes: z.string().max(500).optional(),
-  acceptTerms: z.literal(true, { message: "Debes aceptar los términos" }),
+  acceptTerms: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar los términos" }),
+  }),
   items: z.array(lineItemSchema).min(1, "Agrega al menos 1 ítem"),
 });
 
