@@ -20,6 +20,7 @@ import {
   Receipt,
   FileMinus,
   HandCoins,
+  Plug,
 } from "lucide-react";
 import {
   Sidebar,
@@ -56,6 +57,7 @@ const items = [
   { title: "Bandeja", url: "/inbox", icon: Inbox },
   { title: "Calendario", url: "/calendar", icon: Calendar },
   { title: "Equipo", url: "/team", icon: Users },
+  { title: "API Demo", url: "/api-demo", icon: Plug },
 ];
 
 const reportItems = [
