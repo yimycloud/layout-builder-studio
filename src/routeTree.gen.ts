@@ -13,6 +13,7 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as InboxRouteImport } from './routes/inbox'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as ApiDemoRouteImport } from './routes/api-demo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReportsTrendsRouteImport } from './routes/reports.trends'
 import { Route as ReportsSalesRouteImport } from './routes/reports.sales'
@@ -40,6 +41,11 @@ const InboxRoute = InboxRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDemoRoute = ApiDemoRouteImport.update({
+  id: '/api-demo',
+  path: '/api-demo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -85,6 +91,7 @@ const IncomeCreditNotesRoute = IncomeCreditNotesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api-demo': typeof ApiDemoRoute
   '/calendar': typeof CalendarRoute
   '/inbox': typeof InboxRoute
   '/settings': typeof SettingsRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api-demo': typeof ApiDemoRoute
   '/calendar': typeof CalendarRoute
   '/inbox': typeof InboxRoute
   '/settings': typeof SettingsRoute
@@ -114,6 +122,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api-demo': typeof ApiDemoRoute
   '/calendar': typeof CalendarRoute
   '/inbox': typeof InboxRoute
   '/settings': typeof SettingsRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/api-demo'
     | '/calendar'
     | '/inbox'
     | '/settings'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api-demo'
     | '/calendar'
     | '/inbox'
     | '/settings'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/api-demo'
     | '/calendar'
     | '/inbox'
     | '/settings'
@@ -173,6 +185,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiDemoRoute: typeof ApiDemoRoute
   CalendarRoute: typeof CalendarRoute
   InboxRoute: typeof InboxRoute
   SettingsRoute: typeof SettingsRoute
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api-demo': {
+      id: '/api-demo'
+      path: '/api-demo'
+      fullPath: '/api-demo'
+      preLoaderRoute: typeof ApiDemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -277,6 +297,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiDemoRoute: ApiDemoRoute,
   CalendarRoute: CalendarRoute,
   InboxRoute: InboxRoute,
   SettingsRoute: SettingsRoute,
@@ -292,12 +313,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
